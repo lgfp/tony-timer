@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Tony Timer",
+  "name": "Tony Timer - for Antonio",
   "icons": [
     {
       "src": "favicon.ico",

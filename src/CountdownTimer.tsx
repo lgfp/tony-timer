@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, TextField, Typography, Box, CircularProgress } from '@mui/material';
+import {Button, TextField, Typography, Box, CircularProgress, Link} from '@mui/material';
 
 // import beepSound from './../src/beep.mp3'; // Replace with your beep sound file path
 
@@ -93,8 +93,16 @@ const CountdownTimer: React.FC = () => {
                 <CircularProgress variant="determinate" thickness={22} value={calculateProgress()} style={{ color: 'white' }} size={300} />
             </Box>
             <Typography variant="h5" mt={3}>{formatTime(timeLeft)}</Typography>
+            <Box mt={5}>
+                <Typography variant="body2">
+                    <Link href="https://github.com/lgfp/tony-timer" target="_blank" rel="noopener noreferrer">
+                        View Source Code on GitHub
+                    </Link>
+                </Typography>
+            </Box>
         </Box>
-    );
+
+);
 };
 
 export default CountdownTimer;
