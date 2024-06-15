@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Button, TextField, Typography, Box, CircularProgress } from '@mui/material';
 
+// import beepSound from './../src/beep.mp3'; // Replace with your beep sound file path
+
 const CountdownTimer: React.FC = () => {
     const [minutes, setMinutes] = useState<number>(0);
     const [timeLeft, setTimeLeft] = useState<number>(0);
     const [isActive, setIsActive] = useState<boolean>(false);
 
+
     useEffect(() => {
+        const beepAudio = new Audio('/beep.mp3');
+        const playBeep = () => {
+            beepAudio.play();
+        };
         let interval: NodeJS.Timeout | undefined;
         if (isActive && timeLeft > 0) {
             interval = setInterval(() => {
                 setTimeLeft(timeLeft - 1);
             }, 1000);
         } else if (timeLeft === 0) {
+            if (isActive) {
+                playBeep();
+            }
             setIsActive(false);
         }
         return () => {
@@ -21,6 +31,7 @@ const CountdownTimer: React.FC = () => {
             }
         };
     }, [isActive, timeLeft]);
+
 
     const handleStart = () => {
         setTimeLeft(minutes * 60);
@@ -54,7 +65,7 @@ const CountdownTimer: React.FC = () => {
 
     return (
         <Box display="flex" flexDirection="column" alignItems="center" mt={5}>
-            <Typography variant="h4">Countdown Timer</Typography>
+            <Typography variant="h4">Tony Timer</Typography>
             <Box mt={3}>
                 <TextField
                     type="number"
@@ -77,14 +88,11 @@ const CountdownTimer: React.FC = () => {
                     Reset
                 </Button>
             </Box>
-            <Typography variant="h5" mt={3}>{formatTime(timeLeft)}</Typography>
-            <Box className="circle-timer-container">
-                <div className="circle-timer" style={{ backgroundImage: `conic-gradient(white ${calculateProgress()}%, red ${calculateProgress()}%)` }} />
-            </Box>
             <Box mt={3} position="relative" display="inline-flex">
                 <CircularProgress variant="determinate" thickness={22} value={100} style={{ color: 'red', position: 'absolute' }} size={300} />
                 <CircularProgress variant="determinate" thickness={22} value={calculateProgress()} style={{ color: 'white' }} size={300} />
             </Box>
+            <Typography variant="h5" mt={3}>{formatTime(timeLeft)}</Typography>
         </Box>
     );
 };
